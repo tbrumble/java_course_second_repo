@@ -63,14 +63,13 @@ public class ScenarioAutomat {
                 actions.add(new Action(
                         ActionTypes.SelfCheck, 1, new SelfCheck(), in, out, hardwareAdapter)
                 );
-
-                if (executeLastAction()) {
-                    ActionTypes type = determineActionType();
-                    actions.add(new Action(type, 1, getActionProcedure(type), in, out, hardwareAdapter));
-                } else {
-                    actions.clear();
-                }
             }
-        } while (actions.size() == 0);
+            if (executeLastAction()) {
+                ActionTypes type = determineActionType();
+                actions.add(new Action(type, 1, getActionProcedure(type), in, out, hardwareAdapter));
+            } else {
+                actions.clear();
+            }
+        } while (actions.size() > 0);
     }
 }
