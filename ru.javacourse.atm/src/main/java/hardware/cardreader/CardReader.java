@@ -1,6 +1,6 @@
-package java.hardware.cardreader;
+package hardware.cardreader;
 
-import java.hardware.device.DeviceImpl;
+import hardware.device.DeviceImpl;
 
 public class CardReader extends DeviceImpl {
     public CardReader() {

@@ -1,6 +1,6 @@
-package java.hardware.receiver;
+package hardware.receiver;
 
-import java.hardware.device.DeviceImpl;
+import hardware.device.DeviceImpl;
 
 public class ReceiverDevice extends DeviceImpl {
     public ReceiverDevice() {

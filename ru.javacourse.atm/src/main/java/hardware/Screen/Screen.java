@@ -1,6 +1,6 @@
-package java.hardware.Screen;
+package hardware.Screen;
 
-import java.hardware.device.DeviceImpl;
+import hardware.device.DeviceImpl;
 
 public class Screen extends DeviceImpl {
     public Screen() {

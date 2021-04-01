@@ -1,7 +1,5 @@
-package java;
-
-import java.hardware.atm.ATM;
-import java.hardware.atm.ATMImpl;
+import hardware.atm.ATM;
+import hardware.atm.ATMImpl;
 
 public class Main {
     public static void main(String[] args) {

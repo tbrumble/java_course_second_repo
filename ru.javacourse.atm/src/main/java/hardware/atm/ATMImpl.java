@@ -1,13 +1,11 @@
-package java.hardware.atm;
+package hardware.atm;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
-
-import java.hardware.Screen.Screen;
-import java.hardware.cardreader.CardReader;
-import java.hardware.device.Device;
-import java.hardware.ethernet.EthernetDevice;
-import java.hardware.pinpad.PinPad;
-import java.hardware.receiver.ReceiverDevice;
+import hardware.Screen.Screen;
+import hardware.cardreader.CardReader;
+import hardware.device.Device;
+import hardware.ethernet.EthernetDevice;
+import hardware.pinpad.PinPad;
+import hardware.receiver.ReceiverDevice;
 import java.util.ArrayList;
 import java.util.List;
 

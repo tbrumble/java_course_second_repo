@@ -1,4 +1,4 @@
-package java.hardware.device;
+package hardware.device;
 
 public enum DeviceState {
     Initialized ("Инициализирован"),

@@ -1,6 +1,6 @@
-package java.hardware.ethernet;
+package hardware.ethernet;
 
-import java.hardware.device.DeviceImpl;
+import hardware.device.DeviceImpl;
 
 public class EthernetDevice extends DeviceImpl {
     public EthernetDevice() {

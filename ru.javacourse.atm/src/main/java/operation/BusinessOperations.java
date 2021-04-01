@@ -1,4 +1,4 @@
-package java.businesslogic.operation;
+package operation;
 
 /**
     Операции банкомата:

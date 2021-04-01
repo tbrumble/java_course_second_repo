@@ -1,4 +1,4 @@
-package java.hardware.device;
+package hardware.device;
 
 import java.util.UUID;
 

@@ -1,6 +1,6 @@
-package java.hardware.pinpad;
+package hardware.pinpad;
 
-import java.hardware.device.DeviceImpl;
+import hardware.device.DeviceImpl;
 
 public class PinPad extends DeviceImpl {
     public PinPad() {

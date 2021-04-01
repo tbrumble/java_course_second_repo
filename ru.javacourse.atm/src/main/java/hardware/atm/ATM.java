@@ -1,4 +1,4 @@
-package java.hardware.atm;
+package hardware.atm;
 
 public interface ATM {
     void turnOff();
