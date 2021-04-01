@@ -1,4 +1,4 @@
-package hardware.Screen;
+package hardware.screen;
 
 import hardware.device.DeviceImpl;
 

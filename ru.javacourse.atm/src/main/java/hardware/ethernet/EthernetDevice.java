@@ -4,6 +4,6 @@ import hardware.device.DeviceImpl;
 
 public class EthernetDevice extends DeviceImpl {
     public EthernetDevice() {
-        super("Сетевой адаптер.");
+        super("Сетевой адаптер");
     }
 }

@@ -7,5 +7,9 @@ public class PinPad extends DeviceImpl {
         super("Клавиатура");
     }
 
+    public boolean IsOk(){
+        //пока все ок
+        return Boolean.TRUE;
+    }
 
 }
