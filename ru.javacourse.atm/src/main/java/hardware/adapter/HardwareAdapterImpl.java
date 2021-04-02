@@ -67,8 +67,10 @@ public class HardwareAdapterImpl implements HardwareAdapter {
     public boolean checkEnteredCard() {
         boolean resultCheck = Boolean.FALSE;
         for (Device device: devices){
-            resultCheck = device instanceof CardReader ? ((CardReader) device).isCardOk(): Boolean.FALSE;
-            break;
+            if (device instanceof CardReader) {
+                resultCheck = ((CardReader) device).isCardOk();
+                break;
+            }
         }
         return resultCheck;
     }

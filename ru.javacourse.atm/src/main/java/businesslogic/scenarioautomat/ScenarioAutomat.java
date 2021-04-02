@@ -2,7 +2,6 @@ package businesslogic.scenarioautomat;
 
 import businesslogic.useraction.*;
 import hardware.adapter.HardwareAdapter;
-import hardware.pinpad.PinPad;
 import lombok.NonNull;
 import java.io.InputStream;
 import java.io.PrintStream;
