@@ -8,17 +8,16 @@ import java.util.Scanner;
 
 public class SelfCheck extends ActionProcedure{
     @Override
-    public boolean execute(InputStream inputStream, PrintStream printStream, HardwareAdapter hardwareAdapter, ActionTypes actionTypes) {
+    public ActionProcedureResult execute(InputStream inputStream, PrintStream printStream, HardwareAdapter hardwareAdapter, ActionTypes actionTypes) {
         printStream.println("ИНИЦИАЛИЗАЦИЯ БАНКОМАТА");
         printStream.println(hardwareAdapter.toString());
 
         if (hardwareAdapter.selfCheck()) {
             printStream.println("БАНКОМАТА ЗАРУЖЕН И ГОТОВ К РАБОТЕ");
-            return Boolean.TRUE;
+            return  new ActionProcedureResult().setResultActionType(ActionTypes.Hello);
         } else {
             printStream.println("ПРОБЛЕМА С ОБОРУДОВАНИЕМ БАНКОМАТА, БАНКОМАТ БУДЕТ ВЫКЛЮЧЕН. ОБРАТИТЕСЬ В ТЕХНИЧЕСКУЮ ПОДДЕРЖКУ");
-            hardwareAdapter.turnOff();
-            return Boolean.FALSE;
+            return new ActionProcedureResult().setResultActionType(ActionTypes.TurnOff);
         }
     }
 }

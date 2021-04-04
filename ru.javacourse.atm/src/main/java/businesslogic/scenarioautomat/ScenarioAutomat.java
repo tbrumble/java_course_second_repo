@@ -16,26 +16,8 @@ public class ScenarioAutomat {
         actions = new ArrayList<>();
     }
 
-    private boolean executeLastAction() {
+    private ActionProcedureResult executeLastAction() {
         return actions.get(actions.size() - 1).executeAction();
-    }
-
-    private ActionTypes determineActionType() {
-        if (actions.get(actions.size() - 1).getActionType() == ActionTypes.SelfCheck){
-           return ActionTypes.Hello;
-        } else if (actions.get(actions.size() - 1).getActionType() == ActionTypes.Hello) {
-            return ActionTypes.CardEnter;
-        } else if (actions.get(actions.size() - 1).getActionType() == ActionTypes.CardEnter) {
-            return ActionTypes.PinEnter;
-        } else if (actions.get(actions.size() - 1).getActionType() == ActionTypes.PinEnter) {
-            return ActionTypes.MainPage;
-        } else if (actions.get(actions.size() - 1).getActionType() == ActionTypes.MainPage) {
-            return ActionTypes.UpdateBalance;
-        } else if (actions.get(actions.size() - 1).getActionType() == ActionTypes.UpdateBalance) {
-            return ActionTypes.MainPage;
-        } else {
-            return ActionTypes.SelfCheck;
-        }
     }
 
     private ActionProcedure getActionProcedure(ActionTypes actionTypes) {
@@ -50,6 +32,8 @@ public class ScenarioAutomat {
                 return new Balance();
             case MainPage:
                 return new MainPage();
+            case TurnOff:
+                return new TurnOff();
             default:
                 return new SelfCheck();
         }
@@ -63,12 +47,15 @@ public class ScenarioAutomat {
                         ActionTypes.SelfCheck, 1, new SelfCheck(), in, out, hardwareAdapter)
                 );
             }
-            if (executeLastAction()) {
-                ActionTypes type = determineActionType();
-                actions.add(new Action(type, 1, getActionProcedure(type), in, out, hardwareAdapter));
-            } else {
+
+            ActionProcedureResult actionProcedureResult = executeLastAction();
+            if (actionProcedureResult.isExtendedResult()) {
                 actions.clear();
+            } else {
+                actions.add(new Action(actionProcedureResult.getResultActionType(), 1,
+                        getActionProcedure(actionProcedureResult.getResultActionType()), in, out, hardwareAdapter));
             }
+
         } while (actions.size() > 0);
     }
 }

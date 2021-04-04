@@ -33,7 +33,7 @@ public class Action {
         this.hardwareAdapter = hardwareAdapter;
     }
 
-    public boolean executeAction() {
+    public ActionProcedureResult executeAction() {
         return actionProcedure.execute(inputStream, printStream, hardwareAdapter, actionType);
     }
 

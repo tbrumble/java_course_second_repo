@@ -8,13 +8,13 @@ import java.util.Scanner;
 
 public class CardEnter extends ActionProcedure{
     @Override
-    public boolean execute(InputStream inputStream, PrintStream printStream, HardwareAdapter hardwareAdapter, ActionTypes actionTypes) {
+    public ActionProcedureResult execute(InputStream inputStream, PrintStream printStream, HardwareAdapter hardwareAdapter, ActionTypes actionTypes) {
         printStream.println("ВСТАВЬТЕ КАРТУ");
 
         if (hardwareAdapter.checkEnteredCard()) {
-            return Boolean.TRUE;
+            return new ActionProcedureResult().setResultActionType(ActionTypes.PinEnter);
         } else {
-            return Boolean.FALSE;
+            return new ActionProcedureResult().setResultActionType(ActionTypes.MainPage);
         }
     }
 }

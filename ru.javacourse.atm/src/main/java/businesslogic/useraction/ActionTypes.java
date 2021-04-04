@@ -10,7 +10,9 @@ public enum ActionTypes {
     PinEnter("Воод пина"),
     CardEnter("Ввод карты"),
     Hello("Приветствие"),
-    MainPage("Главная страница");
+    MainPage("Главная страница"),
+    TurnOff("Выключение банкомата"),
+    NullAction("Нулевой объект");
 
     private final String captionValue;
 

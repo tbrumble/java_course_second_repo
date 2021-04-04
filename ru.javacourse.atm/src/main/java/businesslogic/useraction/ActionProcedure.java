@@ -6,5 +6,5 @@ import java.io.InputStream;
 import java.io.PrintStream;
 
 public abstract class ActionProcedure {
-    public abstract boolean execute(InputStream inputStream, PrintStream printStream, HardwareAdapter hardwareAdapter, ActionTypes actionTypes);
+    public abstract ActionProcedureResult execute(InputStream inputStream, PrintStream printStream, HardwareAdapter hardwareAdapter, ActionTypes actionTypes);
 }

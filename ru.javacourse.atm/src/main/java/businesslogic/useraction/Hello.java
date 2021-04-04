@@ -8,10 +8,22 @@ import java.util.Scanner;
 
 public class Hello extends ActionProcedure{
     @Override
-    public boolean execute(InputStream inputStream, PrintStream printStream, HardwareAdapter hardwareAdapter, ActionTypes actionTypes) {
-        printStream.println("ДЛЯ НАЧАЛА РАБОТЫ НАЖМИТЕ СТАРТ (введите число 1)");
+    public ActionProcedureResult execute(InputStream inputStream, PrintStream printStream, HardwareAdapter hardwareAdapter, ActionTypes actionTypes) {
+        ActionProcedureResult actionProcedureResult;
+        printStream.println("ДЛЯ АВТОРИЗАЦИИ В СИСТЕМЕ НАЖМИТЕ АВТОРИЗОВАТЬСЯ (введите число 1)");
 
         Scanner scanner = new Scanner(inputStream);
-        return scanner.nextInt() == 1;
+        int inputResult = scanner.nextInt();
+
+        switch (inputResult) {
+            case 1: {
+                actionProcedureResult = new ActionProcedureResult().setResultActionType(ActionTypes.MainPage);
+                break;
+            }
+            default:
+                actionProcedureResult = new ActionProcedureResult().setResultActionType(ActionTypes.Hello);
+            }
+
+        return actionProcedureResult;
     }
 }
