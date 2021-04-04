@@ -17,7 +17,7 @@ public class Hello extends ActionProcedure{
 
         switch (inputResult) {
             case 1: {
-                actionProcedureResult = new ActionProcedureResult().setResultActionType(ActionTypes.MainPage);
+                actionProcedureResult = new ActionProcedureResult().setResultActionType(ActionTypes.CardEnter);
                 break;
             }
             default:

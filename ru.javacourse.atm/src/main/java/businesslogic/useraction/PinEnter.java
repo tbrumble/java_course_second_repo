@@ -14,7 +14,7 @@ public class PinEnter extends ActionProcedure{
 
         String inputResult = scanner.nextLine();
 
-        if (scanner.nextLine().length() == 4) {
+        if (inputResult.length() == 4) {
             return new ActionProcedureResult().setResultActionType(ActionTypes.MainPage);
         } else {
             return new ActionProcedureResult().setResultActionType(ActionTypes.Hello);
