@@ -11,10 +11,21 @@ import java.util.List;
 public class ScenarioAutomat {
     private List<Action> actions;
 
-    private ActionProcedureResult executeLastAction() {
-        return actions.get(actions.size() - 1).executeAction();
+    private Action getLastAction(){
+        return actions.get(actions.size() - 1);
     }
 
+    private ActionProcedureResult executeLastAction() {
+        return getLastAction().executeAction();
+    }
+
+    private void addSelfCheckActionIfNeed(@NonNull InputStream in, @NonNull PrintStream out, @NonNull HardwareAdapter hardwareAdapter) {
+        if (actions.size() == 0) {
+            actions.add(new Action(
+                    ActionTypes.SelfCheck, 1, new SelfCheck(), in, out, hardwareAdapter)
+            );
+        }
+    }
     private ActionProcedure getActionProcedure(ActionTypes actionTypes) {
         switch (actionTypes) {
             case CardEnter:
@@ -38,11 +49,7 @@ public class ScenarioAutomat {
     public void playScenarios(@NonNull InputStream in, @NonNull PrintStream out, @NonNull HardwareAdapter hardwareAdapter) {
         actions = new ArrayList<>();
         do {
-            if (actions.size() == 0) {
-                actions.add(new Action(
-                        ActionTypes.SelfCheck, 1, new SelfCheck(), in, out, hardwareAdapter)
-                );
-            }
+            addSelfCheckActionIfNeed(in, out, hardwareAdapter);
 
             ActionProcedureResult actionProcedureResult = executeLastAction();
             if (actionProcedureResult.isExtendedResult()) {
