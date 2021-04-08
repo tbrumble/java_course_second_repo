@@ -29,7 +29,7 @@ public class ATMImpl implements ATM{
         scenarioAutomat = new ScenarioAutomat();
     }
 
-    public boolean workATM() {
+    public boolean doATM() {
         do {
             scenarioAutomat.playScenarios(in, out, hardwareAdapter);
         } while (hardwareAdapter.selfCheck());
