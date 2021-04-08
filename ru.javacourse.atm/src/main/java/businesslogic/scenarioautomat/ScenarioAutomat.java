@@ -9,12 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ScenarioAutomat {
-    @NonNull
-    private final List<Action> actions;
-
-    public ScenarioAutomat() {
-        actions = new ArrayList<>();
-    }
+    private List<Action> actions;
 
     private ActionProcedureResult executeLastAction() {
         return actions.get(actions.size() - 1).executeAction();
@@ -41,6 +36,7 @@ public class ScenarioAutomat {
 
 
     public void playScenarios(@NonNull InputStream in, @NonNull PrintStream out, @NonNull HardwareAdapter hardwareAdapter) {
+        actions = new ArrayList<>();
         do {
             if (actions.size() == 0) {
                 actions.add(new Action(
