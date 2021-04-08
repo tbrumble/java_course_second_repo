@@ -3,33 +3,16 @@ package businesslogic.atm;
 import businesslogic.scenarioautomat.ScenarioAutomat;
 import hardware.adapter.HardwareAdapter;
 import hardware.adapter.HardwareAdapterImpl;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 
-import java.io.InputStream;
-import java.io.PrintStream;
-
-@RequiredArgsConstructor
 public class ATMImpl implements ATM{
-    @NonNull
-    private final HardwareAdapter hardwareAdapter;
-    @NonNull
-    private final InputStream in;
-    @NonNull
-    private final PrintStream out;
-    @NonNull
-    private final ScenarioAutomat scenarioAutomat;
-
-    public ATMImpl(InputStream in, PrintStream out) {
-        hardwareAdapter = new HardwareAdapterImpl();
-        this.in = in;
-        this.out = out;
-        scenarioAutomat = new ScenarioAutomat();
-    }
+    private ScenarioAutomat scenarioAutomat;
 
     public void doATM() {
+
+        HardwareAdapter hardwareAdapter = new HardwareAdapterImpl();
+        scenarioAutomat = new ScenarioAutomat();
         do {
-            scenarioAutomat.playScenarios(in, out, hardwareAdapter);
+            scenarioAutomat.playScenarios(System.in, System.out, new HardwareAdapterImpl());
         } while (hardwareAdapter.selfCheck());
     }
 }
