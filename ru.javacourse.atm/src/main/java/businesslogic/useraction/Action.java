@@ -1,7 +1,6 @@
 package businesslogic.useraction;
 
-import hardware.adapter.HardwareAdapter;
-import lombok.Data;
+import hardware.adapter.HardwareDecoratorAdapter;
 import lombok.Getter;
 import lombok.NonNull;
 
@@ -21,20 +20,20 @@ public class Action {
     @NonNull
     private PrintStream printStream;
     @NonNull
-    private HardwareAdapter hardwareAdapter;
+    private HardwareDecoratorAdapter hardwareDecoratorAdapter;
 
     public Action(ActionTypes actionType, int priority, ActionProcedure actionProcedure, InputStream inputStream,
-                  PrintStream printStream, HardwareAdapter hardwareAdapter) {
+                  PrintStream printStream, HardwareDecoratorAdapter hardwareDecoratorAdapter) {
         this.actionProcedure = actionProcedure;
         this.priority = priority;
         this.actionType = actionType;
         this.inputStream = inputStream;
         this.printStream = printStream;
-        this.hardwareAdapter = hardwareAdapter;
+        this.hardwareDecoratorAdapter = hardwareDecoratorAdapter;
     }
 
     public ActionProcedureResult executeAction() {
-        return actionProcedure.execute(inputStream, printStream, hardwareAdapter, actionType);
+        return actionProcedure.execute(inputStream, printStream, hardwareDecoratorAdapter, actionType);
     }
 
 }

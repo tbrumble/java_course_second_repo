@@ -12,13 +12,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class HardwareAdapterImpl implements HardwareAdapter {
+public class HardwareDecoratorDecorator implements HardwareDecoratorAdapter {
     @NonNull
     private final List<Device> devices;
 
-    private HardwareAdapterImpl instanceAdapter;
+    private HardwareDecoratorDecorator instanceAdapter;
 
-    public HardwareAdapterImpl() {
+    public HardwareDecoratorDecorator() {
         //формируем и загружаем устройства банкомата
         devices = new ArrayList<>();
         devices.add(new EthernetDevice());
@@ -28,9 +28,9 @@ public class HardwareAdapterImpl implements HardwareAdapter {
         devices.add(new Screen());
     }
 
-    public HardwareAdapter getInstance() {
+    public HardwareDecoratorAdapter getInstance() {
         if (Objects.isNull(instanceAdapter)) {
-            instanceAdapter = new HardwareAdapterImpl();
+            instanceAdapter = new HardwareDecoratorDecorator();
         }
         return instanceAdapter;
     }

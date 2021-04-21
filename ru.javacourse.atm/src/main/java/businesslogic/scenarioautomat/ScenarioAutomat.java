@@ -1,7 +1,7 @@
 package businesslogic.scenarioautomat;
 
 import businesslogic.useraction.*;
-import hardware.adapter.HardwareAdapter;
+import hardware.adapter.HardwareDecoratorAdapter;
 import lombok.NonNull;
 import java.io.InputStream;
 import java.io.PrintStream;
@@ -40,11 +40,11 @@ public class ScenarioAutomat {
     }
 
 
-    public void playScenarios(@NonNull InputStream in, @NonNull PrintStream out, @NonNull HardwareAdapter hardwareAdapter) {
+    public void playScenarios(@NonNull InputStream in, @NonNull PrintStream out, @NonNull HardwareDecoratorAdapter hardwareDecoratorAdapter) {
         do {
             if (actions.size() == 0) {
                 actions.add(new Action(
-                        ActionTypes.SelfCheck, 1, new SelfCheck(), in, out, hardwareAdapter)
+                        ActionTypes.SelfCheck, 1, new SelfCheck(), in, out, hardwareDecoratorAdapter)
                 );
             }
 
@@ -53,7 +53,7 @@ public class ScenarioAutomat {
                 actions.clear();
             } else {
                 actions.add(new Action(actionProcedureResult.getResultActionType(), 1,
-                        getActionProcedure(actionProcedureResult.getResultActionType()), in, out, hardwareAdapter));
+                        getActionProcedure(actionProcedureResult.getResultActionType()), in, out, hardwareDecoratorAdapter));
             }
 
         } while (actions.size() > 0);

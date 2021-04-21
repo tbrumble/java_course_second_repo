@@ -1,6 +1,6 @@
 package hardware.adapter;
 
-public interface HardwareAdapter {
+public interface HardwareDecoratorAdapter {
     void turnOff();
     boolean selfCheck();
 

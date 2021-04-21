@@ -1,6 +1,6 @@
 package businesslogic.useraction;
 
-import hardware.adapter.HardwareAdapter;
+import hardware.adapter.HardwareDecoratorAdapter;
 
 import java.io.InputStream;
 import java.io.PrintStream;
@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 public class MainPage extends ActionProcedure{
     @Override
-    public ActionProcedureResult execute(InputStream inputStream, PrintStream printStream, HardwareAdapter hardwareAdapter, ActionTypes actionTypes) {
+    public ActionProcedureResult execute(InputStream inputStream, PrintStream printStream, HardwareDecoratorAdapter hardwareDecoratorAdapter, ActionTypes actionTypes) {
         printStream.println("Для проверки баланса - нажмите 1");
         printStream.println("Для выхода - нажмите 2");
         Scanner scanner = new Scanner(inputStream);
