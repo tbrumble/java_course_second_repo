@@ -10,11 +10,11 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class ActionProcedureResult {
     @NonNull
-    ActionTypes resultActionType;
+    private ActionTypes resultActionType;
     @NonNull
-    boolean extendedResult;
+    private boolean extendedResult;
 
     public ActionProcedureResult(){
-        extendedResult = Boolean.FALSE;
+        extendedResult = false;
     }
 }
