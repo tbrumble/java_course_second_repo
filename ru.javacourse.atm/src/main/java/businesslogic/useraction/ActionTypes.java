@@ -7,7 +7,7 @@ public enum ActionTypes {
     ReceiveMoney("Получить деньги"),
     DepositMoney("Внести деньги"),
     SelfCheck("Проверка банкомата"),
-    PinEnter("Воод пина"),
+    PinEnter("Ввод пина"),
     CardEnter("Ввод карты"),
     Hello("Приветствие"),
     MainPage("Главная страница"),

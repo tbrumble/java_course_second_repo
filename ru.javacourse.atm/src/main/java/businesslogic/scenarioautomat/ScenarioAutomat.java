@@ -1,5 +1,6 @@
 package businesslogic.scenarioautomat;
 
+import businesslogic.bank.ApplicationContext;
 import businesslogic.useraction.*;
 import hardware.adapter.HardwareDecoratorAdapter;
 import lombok.NonNull;
@@ -10,20 +11,27 @@ import java.util.List;
 
 public class ScenarioAutomat {
     @NonNull
-    private List<Action> actions;
+    private List<UIAction> UIActions;
+    @NonNull
+    private final ApplicationContext applicationContext;
 
-    private Action getLastAction(){
-        return actions.get(actions.size() - 1);
+    public ScenarioAutomat() {
+        this.applicationContext = new ApplicationContext().getInstance();
+        applicationContext.fillTestData();
+    }
+
+    private UIAction getLastAction(){
+        return UIActions.get(UIActions.size() - 1);
     }
 
     private ActionProcedureResult executeLastAction() {
-        return actions.get(actions.size() - 1).executeAction();
+        return getLastAction().executeAction();
     }
 
     private void addSelfCheckActionIfNeed(@NonNull InputStream in, @NonNull PrintStream out, @NonNull HardwareDecoratorAdapter hardwareDecoratorAdapter) {
-        if (actions.size() == 0) {
-            actions.add(new Action(
-                    ActionTypes.SelfCheck, 1, new SelfCheck(), in, out, hardwareDecoratorAdapter)
+        if (UIActions.size() == 0) {
+            UIActions.add(new UIAction(
+                    ActionTypes.SelfCheck, 1, new SelfCheck(), in, out, hardwareDecoratorAdapter, applicationContext)
             );
         }
     }
@@ -36,7 +44,7 @@ public class ScenarioAutomat {
             case Hello:
                 return new Hello();
             case UpdateBalance:
-                return new Balance();
+                return new UpdateBalance();
             case MainPage:
                 return new MainPage();
             case TurnOff:
@@ -48,18 +56,19 @@ public class ScenarioAutomat {
 
 
     public void playScenarios(@NonNull InputStream in, @NonNull PrintStream out, @NonNull HardwareDecoratorAdapter hardwareDecoratorAdapter) {
-        actions = new ArrayList<>();
+        UIActions = new ArrayList<>();
         do {
             addSelfCheckActionIfNeed(in, out, hardwareDecoratorAdapter);
 
             ActionProcedureResult actionProcedureResult = executeLastAction();
             if (actionProcedureResult.isExtendedResult()) {
-                actions.clear();
+                UIActions.clear();
             } else {
-                actions.add(new Action(actionProcedureResult.getResultActionType(), 1,
-                        getActionProcedure(actionProcedureResult.getResultActionType()), in, out, hardwareDecoratorAdapter));
+                UIActions.add(new UIAction(actionProcedureResult.getResultActionType(), 1,
+                        getActionProcedure(actionProcedureResult.getResultActionType()), in, out, hardwareDecoratorAdapter,
+                        applicationContext));
             }
 
-        } while (actions.size() > 0);
+        } while (UIActions.size() > 0);
     }
 }

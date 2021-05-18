@@ -62,17 +62,4 @@ public class HardwareDecorator implements HardwareDecoratorAdapter {
         }
         return boolResult;
     }
-
-    @Override
-    public boolean checkEnteredCard() {
-        boolean resultCheck = Boolean.FALSE;
-        for (Device device: devices){
-            if (device instanceof CardReader) {
-                resultCheck = ((CardReader) device).isCardOk();
-                break;
-            }
-        }
-        return resultCheck;
-    }
-
 }

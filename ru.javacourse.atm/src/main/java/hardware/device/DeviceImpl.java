@@ -4,7 +4,7 @@ import java.util.UUID;
 
 public class DeviceImpl implements Device{
     private static final String formatString = "Имя: %s, ID: %s, Статус: %s";
-    private UUID deviceUuid;
+    private final UUID deviceUuid;
     private DeviceState deviceState;
     private final String deviceName;
 
