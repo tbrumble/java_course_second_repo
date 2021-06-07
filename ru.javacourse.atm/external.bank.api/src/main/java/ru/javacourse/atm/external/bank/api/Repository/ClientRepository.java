@@ -2,12 +2,12 @@ package ru.javacourse.atm.external.bank.api.Repository;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
-import ru.javacourse.atm.external.bank.api.Entity.Card;
+import ru.javacourse.atm.external.bank.api.Entity.Client;
 
 import java.util.List;
 
 @Repository
-public interface CardRepository extends CrudRepository<Card, Long> {
+public interface ClientRepository extends CrudRepository<Client, Long> {
     @Override
-    List<Card> findAll();
+    List<Client> findAll();
 }

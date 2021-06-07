@@ -14,8 +14,11 @@ import java.util.Date;
 @Setter
 public class Card {
     @Id
-    @Column(name = "cardid")
+    @Column(name = "id")
     @GeneratedValue(strategy=GenerationType.IDENTITY)
+    private Long Id;
+
+    @Column(name = "cardid")
     private Long cardId;
 
     @Column(name = "cardnumber")

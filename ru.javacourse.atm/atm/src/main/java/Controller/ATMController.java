@@ -1,0 +1,86 @@
+package Controller;
+
+import Exceptions.ATMBalanceException;
+import Exceptions.ATMVerifyCardException;
+import JSONPackages.BalancePackage;
+import JSONPackages.CardPackage;
+import JSONPackages.VerifyPackage;
+import Service.ATMService;
+import lombok.AllArgsConstructor;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
+
+import java.util.Objects;
+
+@RestController
+@AllArgsConstructor
+public class ATMController {
+    private ATMService atmService;
+
+    private static final String VERIFY_CARD_ADDRESS = "http://localhost:9091/verifycard";
+    private static final String BALANCE_CARD_ADDRESS = "http://localhost:9091/getbalance/clienthash/";
+
+    @GetMapping(value = "/getbalance/cardpin/{cardpin}/cardcvc/{cardcvc}/cardnumber/{cardnumber}")
+    public String getBalance(@PathVariable("cardpin") String cardPin,
+                               @PathVariable("cardcvc") String cardCvc,
+                               @PathVariable("cardnumber") String cardNumber) {
+
+        if (cardPin.isEmpty() || cardCvc.isEmpty() || cardNumber.isEmpty()) {
+            new ATMVerifyCardException("Bad input data");
+        }
+
+        //отправка запроса для валидации карты и отправка получения запроса, если валилация прошла
+        try {
+            String cardHashId = sendVerifyCardRequest(cardPin, cardCvc, cardNumber);
+            if (!cardHashId.isEmpty()) {
+                return sendBalanceRequest(cardHashId);
+            }
+        } catch (Exception e) {
+            new ATMBalanceException("sendBalanceRequest error");
+        }
+        return "";
+    }
+
+    private String sendBalanceRequest(String cardHashId) throws ATMBalanceException{
+        RestTemplate restTemplate = new RestTemplate();
+        HttpEntity<String> requestBalancePackage = new HttpEntity<>(BALANCE_CARD_ADDRESS);
+        ResponseEntity<BalancePackage> responseBalancePackage = restTemplate.
+                postForEntity(
+                        String.format(BALANCE_CARD_ADDRESS + cardHashId, cardHashId),
+                        requestBalancePackage,
+                        BalancePackage.class);
+
+
+        if (responseBalancePackage.hasBody()
+                && !(Objects.requireNonNull(responseBalancePackage.getBody()).getBalanceDTO() == null))
+        {
+            return atmService.getString(responseBalancePackage);
+        }
+        return "";
+    }
+
+    private HttpEntity<CardPackage> getCardPackageHttpEntity(String cardPin, String cardCvc, String cardNumber) {
+        return new HttpEntity<>(
+                new CardPackage()
+                        .setNumber(cardNumber)
+                        .setCvcHash(cardCvc)
+                        .setPinHash(cardPin)
+                );
+    }
+
+    private String sendVerifyCardRequest(String cardPin, String cardCvc, String cardNumber) throws ATMVerifyCardException{
+        RestTemplate restTemplate = new RestTemplate();
+        HttpEntity<CardPackage> requestCardPackage = getCardPackageHttpEntity(cardPin, cardCvc, cardNumber);
+        ResponseEntity<VerifyPackage> responseVerifyPackage = restTemplate.
+                postForEntity(VERIFY_CARD_ADDRESS, requestCardPackage, VerifyPackage.class);
+        if (responseVerifyPackage.hasBody()
+                && Objects.requireNonNull(responseVerifyPackage.getBody()).isResult()) {
+            return responseVerifyPackage.getBody().getCardPackage().getCardIdHash();
+        }
+        return "";
+    }
+}

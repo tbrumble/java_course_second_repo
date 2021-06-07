@@ -1,6 +1,7 @@
 package ru.javacourse.atm.external.bank.api.Service;
 
 import JSONPackages.CardPackage;
+import Utils.HashBuilder;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.javacourse.atm.external.bank.api.Entity.Card;
@@ -28,6 +29,7 @@ public class CardService {
                     && card.getCvcPinHash().equals(cardPackage.getCvcHash())
                     && card.getCardPinHash().equals(cardPackage.getPinHash())
                     && !card.isBlocked() && verifyDate(card.getExpireDate())) {
+                cardPackage.setCardIdHash(HashBuilder.getStringHash(card.getCardId().toString()));
                 resultValue = Boolean.TRUE;
                 break;
             }
