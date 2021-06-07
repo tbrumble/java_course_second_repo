@@ -1,11 +1,8 @@
-package Controller;
+package ru.javacourse.atm.terminal.Controller;
 
-import Exceptions.ATMBalanceException;
-import Exceptions.ATMVerifyCardException;
 import JSONPackages.BalancePackage;
 import JSONPackages.CardPackage;
 import JSONPackages.VerifyPackage;
-import Service.ATMService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
@@ -13,24 +10,24 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
+import ru.javacourse.atm.terminal.Exceptions.*;
 
 import java.util.Objects;
 
 @RestController
 @AllArgsConstructor
 public class ATMController {
-    private ATMService atmService;
-
     private static final String VERIFY_CARD_ADDRESS = "http://localhost:9091/verifycard";
     private static final String BALANCE_CARD_ADDRESS = "http://localhost:9091/getbalance/clienthash/";
 
-    @GetMapping(value = "/getbalance/cardpin/{cardpin}/cardcvc/{cardcvc}/cardnumber/{cardnumber}")
+
+    @GetMapping("/getbalance/cardpin/{cardpin}/cardcvc/{cardcvc}/cardnumber/{cardnumber}")
     public String getBalance(@PathVariable("cardpin") String cardPin,
                                @PathVariable("cardcvc") String cardCvc,
                                @PathVariable("cardnumber") String cardNumber) {
 
         if (cardPin.isEmpty() || cardCvc.isEmpty() || cardNumber.isEmpty()) {
-            new ATMVerifyCardException("Bad input data");
+            throw new ATMVerifyCardException("Bad input data");
         }
 
         //отправка запроса для валидации карты и отправка получения запроса, если валилация прошла
@@ -40,7 +37,7 @@ public class ATMController {
                 return sendBalanceRequest(cardHashId);
             }
         } catch (Exception e) {
-            new ATMBalanceException("sendBalanceRequest error");
+            throw new ATMBalanceException("sendBalanceRequest error");
         }
         return "";
     }
@@ -50,15 +47,13 @@ public class ATMController {
         HttpEntity<String> requestBalancePackage = new HttpEntity<>(BALANCE_CARD_ADDRESS);
         ResponseEntity<BalancePackage> responseBalancePackage = restTemplate.
                 postForEntity(
-                        String.format(BALANCE_CARD_ADDRESS + cardHashId, cardHashId),
+                        BALANCE_CARD_ADDRESS + cardHashId,
                         requestBalancePackage,
                         BalancePackage.class);
 
 
-        if (responseBalancePackage.hasBody()
-                && !(Objects.requireNonNull(responseBalancePackage.getBody()).getBalanceDTO() == null))
-        {
-            return atmService.getString(responseBalancePackage);
+        if (responseBalancePackage.hasBody() && !(Objects.requireNonNull(responseBalancePackage.getBody()).getBalanceDTO() == null)) {
+           return Objects.requireNonNull(responseBalancePackage.getBody().getBalanceDTO().toString());
         }
         return "";
     }

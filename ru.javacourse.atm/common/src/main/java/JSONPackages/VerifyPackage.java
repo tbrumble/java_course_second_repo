@@ -9,6 +9,10 @@ public class VerifyPackage {
     private CardPackage cardPackage;
     private boolean result;
 
+    public VerifyPackage() {
+
+    }
+
     public VerifyPackage(CardPackage cardPackage){
         this.cardPackage = cardPackage;
         this.result = Boolean.FALSE;

@@ -8,6 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class BalancePackage {
+    public BalancePackage() {}
     private BalanceDTO balanceDTO;
     private String clientHash;
 }

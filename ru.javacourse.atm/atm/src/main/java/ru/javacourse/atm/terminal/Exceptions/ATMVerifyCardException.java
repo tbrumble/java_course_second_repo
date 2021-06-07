@@ -1,4 +1,4 @@
-package Exceptions;
+package ru.javacourse.atm.terminal.Exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

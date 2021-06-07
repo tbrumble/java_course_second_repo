@@ -13,6 +13,10 @@ public class CardPackage {
     private String cvcHash;
     private String cardIdHash;
 
+    public CardPackage() {
+
+    }
+
     @Override
     public String toString(){
         return String.format("CardPackage{Номер:%s, Хеш пина:%s, Хеш cvc:%s; Хеш в системе:%s}", number, pinHash, cvcHash, cardIdHash);
