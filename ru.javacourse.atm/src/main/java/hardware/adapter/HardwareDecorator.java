@@ -63,7 +63,7 @@ public class HardwareDecorator implements HardwareDecoratorAdapter {
         return boolResult;
     }
 
-    @Override
+  @Override
     public boolean checkEnteredCard() {
         boolean resultCheck = Boolean.FALSE;
         for (Device device: devices){
@@ -74,5 +74,5 @@ public class HardwareDecorator implements HardwareDecoratorAdapter {
         }
         return resultCheck;
     }
-
+  
 }
