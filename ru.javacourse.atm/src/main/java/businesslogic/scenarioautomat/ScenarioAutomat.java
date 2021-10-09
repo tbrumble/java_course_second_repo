@@ -11,6 +11,7 @@ import java.util.List;
 
 public class ScenarioAutomat {
     @NonNull
+
     private List<UIAction> UIActions;
     @NonNull
     private final ApplicationContext applicationContext;
@@ -19,6 +20,7 @@ public class ScenarioAutomat {
         this.applicationContext = new ApplicationContext().getInstance();
         applicationContext.fillTestData();
     }
+
 
     private UIAction getLastAction(){
         return UIActions.get(UIActions.size() - 1);
@@ -29,9 +31,11 @@ public class ScenarioAutomat {
     }
 
     private void addSelfCheckActionIfNeed(@NonNull InputStream in, @NonNull PrintStream out, @NonNull HardwareDecoratorAdapter hardwareDecoratorAdapter) {
+
         if (UIActions.size() == 0) {
             UIActions.add(new UIAction(
                     ActionTypes.SelfCheck, 1, new SelfCheck(), in, out, hardwareDecoratorAdapter, applicationContext)
+
             );
         }
     }
